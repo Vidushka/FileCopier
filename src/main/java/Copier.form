@@ -97,6 +97,18 @@
           <text value="Start"/>
         </properties>
       </component>
+      <component id="e487f" class="javax.swing.JProgressBar" binding="progressBar">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="10" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <foreground color="-9119502"/>
+          <stringPainted value="true"/>
+          <value value="0"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

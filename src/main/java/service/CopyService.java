@@ -24,7 +24,9 @@ public class CopyService {
         this.flag = flag;
     }
 
-    public void startCoping(String from, String to, String copyOrMove) {
+    public void startCoping(String from, String to, String copyOrMove, JProgressBar progressBar) {
+        progressBar.setValue(0);
+        progressBar.setVisible(true);
         src = new File(from);
         dst = new File(to);
         try {
@@ -39,12 +41,16 @@ public class CopyService {
             startTime = System.currentTimeMillis();
             while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
+                totalBytesCopied += len;
+                progress = (int) ((totalBytesCopied / (float) expectedBytes) * 100);
+                progressBar.setValue(progress);
             }
             if (copyOrMove.equals("Move")) {
                 boolean delete = src.delete();
             }
             endTime = System.currentTimeMillis();
             JOptionPane.showMessageDialog(null, copyOrMove + " Completed.\n" + (endTime - startTime) + "ms");
+            resetVAlues(progressBar);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -61,6 +67,14 @@ public class CopyService {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void resetVAlues(JProgressBar progressBar) {
+        sourcePath = null;
+        destinationPath = null;
+        progressBar.setValue(0);
+        progressBar.setVisible(false);
+
     }
 }
 

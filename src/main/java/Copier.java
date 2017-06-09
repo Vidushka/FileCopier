@@ -18,6 +18,7 @@ public class Copier {
     private JLabel lblHedding;
     private JButton btnSource;
     private JButton btnDestination;
+    private JProgressBar progressBar;
     private JFileChooser selectFile;
     private String sourceLocation;
     private String destinationLocation;
@@ -25,7 +26,7 @@ public class Copier {
 
     Thread t1 = new Thread(() -> {
         copyOption = comboOption.getSelectedItem().toString();
-        copyService.startCoping(sourceLocation, destinationLocation, copyOption);
+        copyService.startCoping(sourceLocation, destinationLocation, copyOption, progressBar);
     });
 
     public void copyInitializer() {
@@ -38,6 +39,7 @@ public class Copier {
         frame.setVisible(true);
         comboOption.addItem("Copy");
         comboOption.addItem("Move");
+        progressBar.setVisible(false);
 
         btnStart.addActionListener(e -> {
             t1.start();
@@ -45,7 +47,10 @@ public class Copier {
 
         btnStop.addActionListener(e -> {
             t1.interrupt();
+
+            copyService.resetVAlues(progressBar);
             JOptionPane.showMessageDialog(panelCoppier, "Stopped coping!!");
+            copyService.resetVAlues(progressBar);
             btnSource.setBackground(Color.decode("#E8E8E8"));
             btnDestination.setBackground(Color.decode("#E8E8E8"));
         });
